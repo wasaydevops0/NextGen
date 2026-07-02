@@ -1,26 +1,365 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ═══════════════════════════════════════════
+   TAFSOL-INSPIRED DESIGN SYSTEM
+   Dark/Light Mode + Solid Typography
+   ═══════════════════════════════════════════ */
+
+:root,
+[data-theme="dark"] {
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #1a1a1a;
+  --bg-elevated: #141414;
+  --bg-card: #141414;
+  --bg-card-hover: #1f1f1f;
+
+  --text-primary: #e8e8e8;
+  --text-secondary: #8b8b8b;
+  --text-muted: #555555;
+  --text-inverse: #0d0d0d;
+
+  --heading-color: #e8e8e8;
+  --paragraph-color: #8b8b8b;
+
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
+  
+  --accent-blue: #3f8cff;
+  --accent-teal: #0adfc6;
+  --accent-gradient: linear-gradient(135deg, #3f8cff, #0adfc6);
+
+  --nav-bg: rgba(13, 13, 13, 0.85);
+  --nav-border: rgba(255, 255, 255, 0.06);
+
+  --input-bg: transparent;
+  --input-border: rgba(255, 255, 255, 0.12);
+  --input-focus: rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="light"] {
+  --bg-primary: #f4f4f4;
+  --bg-secondary: #ffffff;
+  --bg-elevated: #e0e0e0;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f9f9f9;
+
+  --text-primary: rgba(67, 69, 72, 1);
+  --text-secondary: #6b6b6b;
+  --text-muted: #999999;
+  --text-inverse: #ffffff;
+
+  --heading-color: rgba(67, 69, 72, 1);
+  --paragraph-color: #6b6b6b;
+
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.15);
+
+  --accent-blue: #3f8cff;
+  --accent-teal: #0adfc6;
+  --accent-gradient: linear-gradient(135deg, #3f8cff, #0adfc6);
+
+  --nav-bg: rgba(244, 244, 244, 0.9);
+  --nav-border: rgba(0, 0, 0, 0.06);
+
+  --input-bg: transparent;
+  --input-border: rgba(0, 0, 0, 0.12);
+  --input-focus: rgba(0, 0, 0, 0.4);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-inverse: var(--text-inverse);
+  --color-border: var(--border-color);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ═══════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════ */
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Syne', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+::selection {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════ */
+
+.font-heading {
+  font-family: 'Bebas Neue', 'Impact', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.font-body {
+  font-family: 'Syne', sans-serif;
+}
+
+.font-mono {
+  font-family: 'DM Mono', 'Courier New', monospace;
+}
+
+.text-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   GRADIENT TEXT
+   ═══════════════════════════════════════════ */
+
+.gradient-text {
+  background-image: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ═══════════════════════════════════════════
+   MARQUEE
+   ═══════════════════════════════════════════ */
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════
+   BUTTONS (TAFSOL STYLE: Solid with shadow)
+   ═══════════════════════════════════════════ */
+
+.btn-solid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2.25rem;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.btn-layered {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-layered::after {
+  content: '';
+  position: absolute;
+  inset: 5px -5px -5px 5px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  z-index: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-layered:hover::after {
+  inset: 2px -2px -2px 2px;
+}
+
+.btn-layered:hover .btn-solid {
+  transform: translate(2px, 2px);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION SPACING & HELPERS
+   ═══════════════════════════════════════════ */
+
+.container-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-main { padding: 0 2.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .container-main { padding: 0 3rem; }
+}
+
+.py-section {
+  padding-top: clamp(6rem, 10vw, 10rem);
+  padding-bottom: clamp(6rem, 10vw, 10rem);
+}
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-elevated);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+
+/* ═══════════════════════════════════════════
+   NEXTGENAPPS LOGO THEME STYLES
+   White in Dark Mode, Black in Light Mode
+   ═══════════════════════════════════════════ */
+
+.nextgen-logo-nav {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.05em;
+  font-weight: bold;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.nextgen-logo-nav.for--dark {
+  color: #ffffff !important;
+}
+
+.nextgen-logo-nav.for--light {
+  color: #000000 !important;
+}
+
+.nextgen-logo-hero {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15vw;
+  letter-spacing: 0.05em;
+  font-weight: bold;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.nextgen-logo-hero.for--dark {
+  color: #ffffff !important;
+  opacity: 0.25 !important;
+  text-shadow: 0px 4px 20px rgba(0,0,0,0.5);
+}
+
+.nextgen-logo-hero.for--light {
+  color: #000000 !important;
+  opacity: 0.15 !important;
+  text-shadow: none !important;
+}
+
+/* Custom Dynamic Logo Theme Rules */
+body.nextgen-light-mode .dynamic-logo-text {
+  color: #000000 !important;
+}
+
+
+
+
+/* ═══════════════════════════════════════════
+   ULTRA-PREMIUM LIQUID GLASS TEXT EFFECT (APPLE STYLE)
+   ═══════════════════════════════════════════ */
+.dynamic-hero-logo {
+  position: relative;
+  display: inline-block;
+  
+  /* The core text becomes transparent to show the gradient */
+  color: transparent !important;
+  
+  /* Base reflection gradient (milky glass) */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.1) 48%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  
+  /* Thick glass shadow casting on the background */
+  filter: drop-shadow(0px 20px 40px rgba(0, 0, 0, 0.8)) drop-shadow(0px 5px 15px rgba(255, 255, 255, 0.15)) !important;
+  
+  /* A subtle white outline to define the glass shape */
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.4) !important;
+  
+  z-index: 10;
+}
+
+/* 3D Specular Highlight layer layered exactly on top */
+.dynamic-hero-logo::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  
+  /* Highlight at the very top edge */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0) 20%
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  
+  /* Blend it in for that glossy wet look */
+  mix-blend-mode: overlay !important;
+  pointer-events: none;
+}
+
+/* Light mode overrides for the glass text */
+body.nextgen-light-mode .dynamic-hero-logo {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.1) 48%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  ) !important;
+  -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.3) !important;
+  filter: drop-shadow(0px 20px 40px rgba(0, 0, 0, 0.2)) drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.05)) !important;
+}
+
+body.nextgen-light-mode .dynamic-hero-logo::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0) 30%
+  ) !important;
+  mix-blend-mode: hard-light !important;
 }
