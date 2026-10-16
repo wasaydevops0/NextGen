@@ -1,16 +1,27 @@
-import fs from 'fs';
-import path from 'path';
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import Services from "@/components/Services";
+import ClientMarquee from "@/components/ClientMarquee";
+import Experience from "@/components/Experience";
+import Projects from "@/components/Projects";
+import Testimonials from "@/components/Testimonials";
+import Blog from "@/components/Blog";
+import DiscussionCTA from "@/components/DiscussionCTA";
+import Footer from "@/components/Footer";
 
-/**
- * Home page — renders the pre-built Webflow HTML.
- *
- * The site is a Webflow export wrapped in Next.js for hosting flexibility.
- * All page content lives in `site-body.html`; Webflow's own CSS and JS
- * handle styling and interactions (loaded via layout.js).
- */
-export default function Home() {
-  const htmlPath = path.join(process.cwd(), 'src/app/site-body.html');
-  const bodyHtml = fs.readFileSync(htmlPath, 'utf8');
-
-  return <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />;
+export default function HomePage() {
+  return (
+    <div className="bg-[#171717] min-h-screen overflow-x-hidden w-full selection:bg-brand-orange selection:text-white">
+      <Navbar />
+      <Hero />
+      <Services />
+      <ClientMarquee />
+      <Experience />
+      <Projects />
+      <Testimonials />
+      <Blog />
+      <DiscussionCTA />
+      <Footer />
+    </div>
+  );
 }

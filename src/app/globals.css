@@ -1,258 +1,64 @@
 @import "tailwindcss";
 
-
-/* ╔═══════════════════════════════════════════════════════════════╗
-   ║  NextGenApps — Custom Design Tokens & Overrides              ║
-   ║                                                               ║
-   ║  The bulk of styling comes from the Webflow export:           ║
-   ║    • webflow-shared.css  (Webflow normalize + base)           ║
-   ║    • webflow-main.css    (all component styles)               ║
-   ║                                                               ║
-   ║  This file only contains:                                     ║
-   ║    1. CSS custom properties for dark/light theming             ║
-   ║    2. Base resets & scrollbar                                  ║
-   ║    3. Hero liquid-glass text effect                            ║
-   ║    4. Mega-menu glassmorphism fix                              ║
-   ╚═══════════════════════════════════════════════════════════════╝ */
-
-
-/* ─────────────────────────────────────────────
-   1. DESIGN TOKENS — Dark / Light Theme
-   ───────────────────────────────────────────── */
-
-:root,
-[data-theme="dark"] {
-  /* Backgrounds */
-  --bg-primary:    #0d0d0d;
-  --bg-secondary:  #1a1a1a;
-  --bg-elevated:   #141414;
-  --bg-card:       #141414;
-  --bg-card-hover: #1f1f1f;
-
-  /* Text */
-  --text-primary:   #e8e8e8;
-  --text-secondary: #8b8b8b;
-  --text-muted:     #555555;
-  --text-inverse:   #0d0d0d;
-  --heading-color:  #e8e8e8;
-  --paragraph-color:#8b8b8b;
-
-  /* Borders */
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.15);
-
-  /* Accents */
-  --accent-blue:     #3f8cff;
-  --accent-teal:     #0adfc6;
-  --accent-gradient:  linear-gradient(135deg, #3f8cff, #0adfc6);
-
-  /* Navigation */
-  --nav-bg:     rgba(13, 13, 13, 0.85);
-  --nav-border: rgba(255, 255, 255, 0.06);
-
-  /* Inputs */
-  --input-bg:    transparent;
-  --input-border: rgba(255, 255, 255, 0.12);
-  --input-focus:  rgba(255, 255, 255, 0.4);
+@theme {
+  --color-brand-orange: #FD853A;
+  --color-brand-orangeDark: #e57229;
+  --font-urbanist: var(--font-urbanist), sans-serif;
+  --font-outfit: var(--font-outfit), sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
 }
-
-[data-theme="light"] {
-  --bg-primary:    #f4f4f4;
-  --bg-secondary:  #ffffff;
-  --bg-elevated:   #e0e0e0;
-  --bg-card:       #ffffff;
-  --bg-card-hover: #f9f9f9;
-
-  --text-primary:   rgba(67, 69, 72, 1);
-  --text-secondary: #6b6b6b;
-  --text-muted:     #999999;
-  --text-inverse:   #ffffff;
-  --heading-color:  rgba(67, 69, 72, 1);
-  --paragraph-color:#6b6b6b;
-
-  --border-color: rgba(0, 0, 0, 0.08);
-  --border-hover: rgba(0, 0, 0, 0.15);
-
-  --accent-blue:     #3f8cff;
-  --accent-teal:     #0adfc6;
-  --accent-gradient:  linear-gradient(135deg, #3f8cff, #0adfc6);
-
-  --nav-bg:     rgba(244, 244, 244, 0.9);
-  --nav-border: rgba(0, 0, 0, 0.06);
-
-  --input-bg:    transparent;
-  --input-border: rgba(0, 0, 0, 0.12);
-  --input-focus:  rgba(0, 0, 0, 0.4);
-}
-
-/* Expose tokens to Tailwind v4 */
-@theme inline {
-  --color-bg-primary:    var(--bg-primary);
-  --color-bg-secondary:  var(--bg-secondary);
-  --color-text-primary:  var(--text-primary);
-  --color-text-secondary:var(--text-secondary);
-  --color-text-inverse:  var(--text-inverse);
-  --color-border:        var(--border-color);
-}
-
-
-/* ─────────────────────────────────────────────
-   2. BASE STYLES & SCROLLBAR
-   ───────────────────────────────────────────── */
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: 'Syne', sans-serif;
-  font-weight: 400;
-  line-height: 1.6;
+  background-color: #171717;
+  color: #FCFCFD;
+  font-family: var(--font-inter), sans-serif;
   overflow-x: hidden;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #171717;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FD853A;
 }
 
 ::selection {
-  background: var(--text-primary);
-  color: var(--bg-primary);
-}
-
-/* Minimal scrollbar */
-::-webkit-scrollbar       { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: var(--bg-elevated); }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-
-
-/* ─────────────────────────────────────────────
-   3. HERO — Liquid Glass Text (Apple-style)
-
-   The large "NextGenApps" watermark in the hero
-   uses a milky refraction gradient clipped to
-   text, with a specular highlight pseudo-element
-   layered on top via mix-blend-mode.
-   ───────────────────────────────────────────── */
-
-.main-logo.for--light {
-  color: #111111 !important;
-}
-
-.dynamic-hero-logo {
-  position: relative;
-  display: inline-block;
-  color: transparent !important;
-  z-index: 10;
-
-  /* Milky white glass refraction (as requested by user) */
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 1)    0%,
-    rgba(255, 255, 255, 0.1)  48%,
-    rgba(255, 255, 255, 0.4)  50%,
-    rgba(255, 255, 255, 0.05) 100%
-  ) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-
-  /* Depth & shadow */
-  filter:
-    drop-shadow(0px 20px 40px rgba(0, 0, 0, 0.8))
-    drop-shadow(0px 5px 15px rgba(255, 255, 255, 0.15)) !important;
-
-  /* Glass edge bevel */
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.6) !important;
-}
-
-/* Specular highlight overlay */
-.dynamic-hero-logo::before {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0)   20%
-  ) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  color: transparent !important;
-  mix-blend-mode: overlay !important;
-}
-
-
-
-
-/* ─────────────────────────────────────────────
-   4. MEGA MENU — Glassmorphism Background
-
-   The Webflow navbar dropdowns have no default
-   background when rendered outside Webflow's
-   hosting. These rules add a frosted-glass
-   panel behind every dropdown / overlay.
-   ───────────────────────────────────────────── */
-
-.w-nav-overlay,
-.drop-menu,
-.drop-menu-content-wrapper,
-.mega-menu-list,
-.uui-navbar06_dropdown-list {
-  background: rgba(10, 10, 10, 0.85) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
-  border-radius: 16px !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* Text legibility on dark glass */
-.drop-menu .animation-text,
-.mega-menu-list .mega-menu-heading,
-.mega-menu-list .text-block-4 {
-  color: #ffffff !important;
-}
-
-/* Dropdown z-index & spacing */
-.w-dropdown-list,
-.mega-menu-list {
-  z-index: 9999 !important;
-  padding: 1rem !important;
-}
-
-/* Full-screen menu overlay */
-.menu-animation-white-bg {
-  background: rgba(10, 10, 10, 0.95) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-}
-
-/* ── Light-mode overrides ── */
-
-body.nextgen-light-mode .w-nav-overlay,
-body.nextgen-light-mode .drop-menu,
-body.nextgen-light-mode .drop-menu-content-wrapper,
-body.nextgen-light-mode .mega-menu-list,
-body.nextgen-light-mode .uui-navbar06_dropdown-list {
-  background: rgba(255, 255, 255, 0.85) !important;
-  border: 1px solid rgba(0, 0, 0, 0.05) !important;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1) !important;
-}
-
-body.nextgen-light-mode .drop-menu .animation-text,
-body.nextgen-light-mode .mega-menu-list .mega-menu-heading,
-body.nextgen-light-mode .mega-menu-list .text-block-4 {
-  color: #000000 !important;
-}
-
-body.nextgen-light-mode .menu-animation-white-bg {
-  background: rgba(255, 255, 255, 0.95) !important;
-}
-
-/* Hide the theme toggle button completely (Light Mode Only) */
-.mode-toggle-wrapper {
-  display: none !important;
+  background: #FD853A;
+  color: #ffffff;
 }
